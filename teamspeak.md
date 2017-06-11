@@ -1,0 +1,3 @@
+# Teamspeak
+
+Teamspeak - Regeln

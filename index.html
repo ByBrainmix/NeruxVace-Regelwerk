@@ -1,0 +1,54 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption|Roboto+Slab" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
+  <nav class="navbar navbar-default container">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#" class="link" id="ingame">Ingame</a></li>
+          <li><a href="#" class="link" id="teamspeak">Teamspeak</a></li>
+          <li><a href="#" class="link" id="forum">Forum</a></li>
+          <li><a href="#" class="link" id="interaktion">Interaktion</a></li>
+          <li><a href="#" class="link" id="sonstiges">Sonstiges</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container" id="content">
+  <h1>NeruxVace - Regelwerk</h1>
+  <p>Das offizielle Regelwerk von NeruxVace <br>
+  geschrieben von dem einzigartigen Brainmix <br>
+  Wer Fehler findet, darf sie behalten!</p>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+  window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+</script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/showdown.min.js"></script>
+<script type="text/javascript">
+  var converter = new showdown.Converter();
+  $('.link').stop().on('click', function() {
+    $('#content').load('./' + $(this).attr('id') + '.md', function(response, status, xhr) {
+      if(status === 'error') {
+        $('#content').html('Es ist was falsch. ' + xhr.status + ' ' + xhr.statusText);
+      } else {
+        $('#content').html(converter.makeHtml($('#content').html()));
+      }
+    });
+  });
+</script>
