@@ -41,32 +41,3 @@
 <script src="js/vendor/showdown.min.js"></script>
 <script src="js/vendor/page.min.js"></script>
 <script src="js/main.js"></script>
-<script type="text/javascript">
-/*
-  var site = window.location.hash;
-  if (site === '') {
-    $('#content').html($('#default').html());
-  } else {
-    load(site.substring(1));
-  }
-
-  $('.link').stop().on('click', function() {
-    var id = $(this).attr('id');
-    load(id);
-    console.log('rendering: ' + id);
-    console.log('hash before: ' + window.location.hash);
-    window.location.hash = '#' + id;
-    console.log('hash after: ' + window.location.hash);
-  });
-
-  var converter = new showdown.Converter();
-  function load(site) {
-    $('#content').load('./' + site + '.md', function(response, status, xhr) {
-      if (status === 'error') {
-        $('#content').html('<h3>Ein Fehler ist aufgetreten</h3><br><p>' + xhr.status + ' ' + xhr.statusText + '</p>');
-      } else {
-        $('#content').html(converter.makeHtml($('#content').html()));
-      }
-    });
-  }*/
-</script>
