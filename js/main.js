@@ -2,8 +2,8 @@ page(baseroute, function() {
   $('#content').html($('#default').html());
 });
 
-page(baseroute + '/*', function(context) {
-  var id = window.location.pathname.substring(baseroute.length);
+page(baseroute + '/:id', function(context) {
+  var id = context.params.id;
   load(id);
 });
 
@@ -25,7 +25,7 @@ var fadeDuration = 100;
 
 function load(site) {
   $.ajax({
-    url: '../getrules.php?page=' + site,
+    url: baseroute + '/getrules.php?page=' + site,
     success: function(data) {
       var converted = converter.makeHtml(data);
       $('#content').html(converted);
@@ -40,8 +40,8 @@ function load(site) {
 $('.nav > li > a').click(function(e) {
   var href = $(this).attr('href');
   $('#content').fadeTo(fadeDuration, 0, function() {
-    load(href.substring(1));
-    window.history.pushState('test1', 'test2', baseroute + href);
+    load(href.substring(2));
+    window.history.pushState('test1', 'test2', baseroute + href.substring(1));
   });
   return false;
 });
