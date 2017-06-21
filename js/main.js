@@ -4,7 +4,7 @@ page(baseroute, function() {
 
 page(baseroute + '/:id', function(context) {
   var id = context.params.id;
-  load(id);
+  loadSite(id, renderMarkdown);
 });
 
 page.start();
@@ -23,25 +23,46 @@ var converter = new showdown.Converter();
 
 var fadeDuration = 100;
 
-function load(site) {
+function loadSite(site, callback) {
   $.ajax({
     url: baseroute + '/getrules.php?page=' + site,
-    success: function(data) {
-      var converted = converter.makeHtml(data);
-      $('#content').html(converted);
-    },
+    success: callback,
     error: function() {
-      $('#content').html('something went wrong...');
+      callback('###something went wrong...');
     }
   });
-  if($('#content').css('opacity') === '0') $('#content').fadeTo(fadeDuration, 1);
+
+}
+
+function renderMarkdown(data) {
+  var converted = converter.makeHtml(data);
+  $('#content').html(converted);
+  if(isInvisible()) $('#content').fadeTo(fadeDuration, 1);
+}
+
+function isInvisible() {
+  return $('#content').css('opacity') === '0';
 }
 
 $('.nav > li > a').click(function(e) {
   var href = $(this).attr('href');
+  var fadedOut = false;
+  loadSite(href.substring(2), function(data) {
+    if(fadedOut) {
+      renderMarkdown(data);
+    } else {
+      var interval = setInterval(function() {
+        if(fadedOut) {
+          renderMarkdown(data);
+          clearInterval(interval);
+        }
+      }, 1, 1);
+    }
+  });
+
   $('#content').fadeTo(fadeDuration, 0, function() {
-    load(href.substring(2));
-    window.history.pushState('test1', 'test2', baseroute + href.substring(1));
+    fadedOut = true;
+    window.history.pushState('test', '', baseroute + href.substring(1));
   });
   return false;
 });
